@@ -20,29 +20,22 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val recyclerView : RecyclerView
-            = findViewById(R.id.poke_recycler)
+        val recyclerView : RecyclerView = findViewById(R.id.poke_recycler)
 
-        val inputTextSearchPokemon : TextInputEditText =
-            findViewById(R.id.text_input_search_pokemon)
+        val inputTextSearchPokemon : TextInputEditText = findViewById(R.id.text_input_search_pokemon)
 
-        inputTextSearchPokemon.addTextChangedListener(
-            object : TextWatcher{
+        inputTextSearchPokemon.addTextChangedListener(object : TextWatcher {
                 override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
 
-                override fun onTextChanged(value: CharSequence?,
-                                           p1: Int,
-                                           p2: Int,
-                                           p3: Int) {
-
-                    if(pokemonList != null){
+                override fun onTextChanged(value: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                    if (pokemonList != null) {
                         val filteredList = pokemonList!!
-                            .filter { pokemon->
-                            pokemon.name.contains(value!!)
-                        }
-                        recyclerView.adapter = PokeAdapter(filteredList)
-                        { pokemon ->
-                            callPokemonDetail(pokemon)
+                            .filter {
+                                pokemon ->
+                                pokemon.name.contains(value!!)
+                            }
+                        recyclerView.adapter = PokeAdapter(filteredList) {
+                            pokemon -> callPokemonDetail(pokemon)
                         }
                     }
                 }
@@ -51,24 +44,23 @@ class MainActivity : AppCompatActivity() {
             }
         )
 
-        recyclerView.layoutManager =
-            GridLayoutManager(this, 3)
+        recyclerView.layoutManager = GridLayoutManager(this, 3)
 
-        PokeApi().getPokemons{ pokemons->
-            pokemonList = pokemons
-            recyclerView.adapter = PokeAdapter(pokemons!!)
-            { pokemon ->
-                callPokemonDetail(pokemon)
+        PokeApi().getPokemons {
+            pokemons -> pokemonList = pokemons
+            recyclerView.adapter = PokeAdapter(pokemons!!) {
+                pokemon -> callPokemonDetail(pokemon)
             }
         }
     }
 
-    fun callPokemonDetail(pokemon:Pokemon){
+    fun callPokemonDetail(pokemon: Pokemon) {
 
         val intent = Intent(
             this,
-            PokemonDetailsActivity::class.java)
-        intent.putExtra("pokemon",pokemon.name)
+            PokemonDetailsActivity::class.java
+        )
+        intent.putExtra("pokemon", pokemon.name)
         startActivity(intent)
     }
 }

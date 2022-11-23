@@ -40,19 +40,16 @@ class PokeApi {
         })
     }
 
-    fun getPokemonByName(name:String,
-                         listener: (Pokemon?) -> Unit){
+    fun getPokemonByName(name:String, listener: (Pokemon?) -> Unit) {
 
         val call = pokeService?.getPokemonByName(name)
 
         call?.enqueue(object : Callback<Pokemon>{
-            override fun onResponse(call: Call<Pokemon>,
-                                    response: Response<Pokemon>) {
+            override fun onResponse(call: Call<Pokemon>, response: Response<Pokemon>) {
                 listener(response.body())
             }
 
-            override fun onFailure(call: Call<Pokemon>,
-                                   t: Throwable) {
+            override fun onFailure(call: Call<Pokemon>, t: Throwable) {
                 listener(null)
             }
         })
