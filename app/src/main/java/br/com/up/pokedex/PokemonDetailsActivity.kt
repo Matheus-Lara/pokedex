@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
+import br.com.up.pokedex.model.Ability
 import br.com.up.pokedex.model.Stat
 import br.com.up.pokedex.model.Type
 import br.com.up.pokedex.network.PokeApi
@@ -36,6 +37,14 @@ class PokemonDetailsActivity : AppCompatActivity() {
 
                 stats.forEach {
                     textViewStats.text = textViewStats.text as String + it.stat.name + " | "
+                }
+
+                val textViewAbilities : TextView = findViewById(R.id.abilities_text_view)
+                textViewAbilities.text = "Habilidades: "
+                val abilities : List<Ability> = pokemon.abilities
+
+                abilities.forEach {
+                    textViewAbilities.text = textViewAbilities.text as String + it.ability.name + " | "
                 }
 
                 val id = pokemon.id
