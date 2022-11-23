@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
+import br.com.up.pokedex.model.Stat
 import br.com.up.pokedex.model.Type
 import br.com.up.pokedex.network.PokeApi
 import com.squareup.picasso.Picasso
@@ -27,6 +28,14 @@ class PokemonDetailsActivity : AppCompatActivity() {
 
                 types.forEach {
                     textViewTypes.text = textViewTypes.text as String + it.type.name + " | "
+                }
+
+                val textViewStats : TextView = findViewById(R.id.stats_text_view)
+                textViewStats.text = "Stats: "
+                val stats : List<Stat> = pokemon.stats
+
+                stats.forEach {
+                    textViewStats.text = textViewStats.text as String + it.stat.name + " | "
                 }
 
                 val id = pokemon.id
