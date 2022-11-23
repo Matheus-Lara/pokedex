@@ -2,9 +2,11 @@ package br.com.up.pokedex
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.method.ScrollingMovementMethod
 import android.widget.ImageView
 import android.widget.TextView
 import br.com.up.pokedex.model.Ability
+import br.com.up.pokedex.model.Move
 import br.com.up.pokedex.model.Stat
 import br.com.up.pokedex.model.Type
 import br.com.up.pokedex.network.PokeApi
@@ -46,6 +48,17 @@ class PokemonDetailsActivity : AppCompatActivity() {
                 abilities.forEach {
                     textViewAbilities.text = textViewAbilities.text as String + it.ability.name + " | "
                 }
+
+                val textViewMoves : TextView = findViewById(R.id.moves_text_view)
+                textViewMoves.text = "Movimentos: "
+                val moves : List<Move> = pokemon.moves
+
+                val numbers = listOf(0, 1, 2, 3, 4, 5, 6)
+                for (i in numbers) {
+                    textViewMoves.text = textViewMoves.text as String + moves.get(i).move.name + " | "
+                }
+
+                textViewMoves.text = textViewMoves.text as String + "..."
 
                 val id = pokemon.id
                 val url = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/$id.png"
